@@ -1,3 +1,4 @@
+
 import { LatLngTuple } from "leaflet";
 
 interface RouteResponse {
@@ -16,12 +17,13 @@ interface RouteResponse {
 }
 
 // Define a custom GeoJSON Feature type that allows for any geometry type
-interface CustomGeoJSONFeature extends Omit<GeoJSON.Feature, 'geometry'> {
+interface CustomGeoJSONFeature {
+  type: 'Feature';
   geometry: {
     type: string;
     coordinates: number[][] | number[][][] | number[][][][];
   };
-  properties?: {
+  properties: {
     distance?: number;
     duration?: number;
     [key: string]: any;
