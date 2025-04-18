@@ -1,4 +1,3 @@
-
 import { LatLngTuple } from "leaflet";
 
 interface RouteResponse {
@@ -16,7 +15,20 @@ interface RouteResponse {
   waypoints: any[];
 }
 
-export async function getRoute(from: LatLngTuple, to: LatLngTuple): Promise<GeoJSON.Feature | null> {
+// Define a custom GeoJSON Feature type that allows for any geometry type
+interface CustomGeoJSONFeature extends Omit<GeoJSON.Feature, 'geometry'> {
+  geometry: {
+    type: string;
+    coordinates: number[][] | number[][][] | number[][][][];
+  };
+  properties?: {
+    distance?: number;
+    duration?: number;
+    [key: string]: any;
+  };
+}
+
+export async function getRoute(from: LatLngTuple, to: LatLngTuple): Promise<CustomGeoJSONFeature | null> {
   try {
     // Format coordinates from [lat, lng] to [lng, lat] for OSRM
     const fromLng = from[1];
@@ -40,7 +52,7 @@ export async function getRoute(from: LatLngTuple, to: LatLngTuple): Promise<GeoJ
     }
     
     // Create GeoJSON Feature from the route geometry
-    const feature: GeoJSON.Feature = {
+    const feature: CustomGeoJSONFeature = {
       type: 'Feature',
       properties: {
         distance: data.routes[0].distance,

@@ -1,4 +1,3 @@
-
 import { useEffect, useRef } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -85,7 +84,6 @@ const MapComponent = ({ userLocation, selectedDepot, depots, visibleDepotNames }
         }
       }
     });
-
   }, [userLocation, selectedDepot, depots, visibleDepotNames]);
 
   // Draw route when selectedDepot changes
@@ -104,8 +102,8 @@ const MapComponent = ({ userLocation, selectedDepot, depots, visibleDepotNames }
         const routeData = await getRoute(userLocation, selectedDepot.location);
         
         if (routeData) {
-          // Create and add GeoJSON layer
-          routeLayerRef.current = L.geoJSON(routeData, {
+          // Create and add GeoJSON layer with any type
+          routeLayerRef.current = L.geoJSON(routeData as any, {
             style: {
               color: "#d32f2f",
               weight: 5,
