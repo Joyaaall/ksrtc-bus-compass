@@ -61,15 +61,26 @@ const Index = () => {
       setSearched(true);
       
       if (results.length > 0) {
-        toast({
-          title: "Buses found",
-          description: `Found ${results.length} buses between ${from} and ${to}.`,
-          duration: 3000,
-        });
+        const withWarnings = results.filter(bus => bus.isFarAway).length;
+        
+        if (withWarnings > 0) {
+          toast({
+            title: `Found ${results.length} buses`,
+            description: `${withWarnings} buses require traveling to a distant depot first.`,
+            variant: "warning",
+            duration: 5000,
+          });
+        } else {
+          toast({
+            title: "Buses found",
+            description: `Found ${results.length} buses between ${from} and ${to}.`,
+            duration: 3000,
+          });
+        }
       } else {
         toast({
           title: "No buses found",
-          description: `No direct buses found between ${from} and ${to}.`,
+          description: `No buses found that travel from ${from} to ${to} in that order.`,
           variant: "destructive",
           duration: 5000,
         });
@@ -78,17 +89,16 @@ const Index = () => {
   };
 
   const handleGetDirections = (busId: number) => {
-    const bus = busData.find(b => b.id === busId);
+    const bus = buses.find(b => b.id === busId);
     if (bus && userLocation) {
-      const distance = calculateDistance(userLocation, bus.depot_location);
       setSelectedDepot({
-        name: bus.from,
-        location: bus.depot_location
+        name: bus.boardingPoint,
+        location: bus.boardingLocation
       });
       
       toast({
-        title: "Directions to " + bus.from,
-        description: `Distance: ${formatDistance(distance)}. Route displayed on map.`,
+        title: `Directions to ${bus.boardingPoint}`,
+        description: `Distance: ${formatDistance(bus.distance)}. Route displayed on map.`,
         duration: 5000,
       });
     }

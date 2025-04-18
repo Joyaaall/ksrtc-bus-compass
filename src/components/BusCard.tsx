@@ -1,7 +1,7 @@
 
 import { BusWithDistance } from "@/services/busService";
 import { formatDistance } from "@/services/mapService";
-import { Bus, Clock, MapPin, Navigation } from "lucide-react";
+import { Bus, Clock, MapPin, Navigation, AlertTriangle, Route } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface BusCardProps {
@@ -33,10 +33,29 @@ const BusCard = ({ bus, onGetDirections }: BusCardProps) => {
             </div>
           </div>
           
-          <div className="mt-2">
-            <p className="text-xs text-gray-500">
-              <span className="font-semibold">Route:</span> {bus.route_highlights}
-            </p>
+          {/* Boarding Point Information */}
+          <div className="mt-2 flex items-start space-x-1">
+            <MapPin className="h-4 w-4 text-green-600 mt-0.5" />
+            <div>
+              <span className="text-sm font-medium text-green-600">
+                Board at: {bus.boardingPoint}
+              </span>
+              {bus.isFarAway && (
+                <div className="flex items-center mt-1 text-xs text-amber-600">
+                  <AlertTriangle className="h-3.5 w-3.5 mr-1" />
+                  <span>Warning: You'll need to travel to {bus.boardingPoint} first ({formatDistance(bus.distance)} away)</span>
+                </div>
+              )}
+            </div>
+          </div>
+          
+          {/* Route Sequence */}
+          <div className="mt-2 flex items-start space-x-1">
+            <Route className="h-4 w-4 text-gray-500 mt-0.5" />
+            <div className="text-xs text-gray-500">
+              <span className="font-semibold">Route: </span>
+              {bus.route_sequence.join(" → ")}
+            </div>
           </div>
         </div>
         

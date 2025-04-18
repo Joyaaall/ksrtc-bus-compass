@@ -1,31 +1,49 @@
 
 import { busData, BusData } from "@/data/buses";
+import { depots } from "@/data/depots";
 import { LatLngTuple } from "leaflet";
 import { calculateDistance } from "./mapService";
 
 export interface BusWithDistance extends BusData {
   distance: number;
+  boardingPoint: string;
+  boardingLocation: LatLngTuple;
+  isFarAway: boolean;
 }
 
 export function findBuses(fromDepot: string, toDepot: string, userLocation?: LatLngTuple): BusWithDistance[] {
-  // Filter buses that match the route
+  // Filter buses that match the route in correct order
   const matchingBuses = busData.filter(bus => {
-    const matchesFrom = bus.from === fromDepot || bus.route_highlights.includes(fromDepot);
-    const matchesTo = bus.to === toDepot || bus.route_highlights.includes(toDepot);
+    const route = bus.route_sequence;
+    const fromIndex = route.indexOf(fromDepot);
+    const toIndex = route.indexOf(toDepot);
     
-    return matchesFrom && matchesTo;
+    // Valid if both depots exist and are in correct order
+    return fromIndex !== -1 && toIndex !== -1 && fromIndex < toIndex;
   });
   
-  // Add distance from user if location is available
+  // Add distance and boarding point info
   const busesWithDistance = matchingBuses.map(bus => {
+    // Find the earliest valid boarding point (fromDepot or a subsequent stop)
+    const fromIndex = bus.route_sequence.indexOf(fromDepot);
+    const boardingPoint = bus.route_sequence[fromIndex];
+    const boardingLocation = depots[boardingPoint] || bus.depot_location;
+    
     let distance = 0;
     if (userLocation) {
-      distance = calculateDistance(userLocation, bus.depot_location);
+      distance = calculateDistance(userLocation, boardingLocation);
     }
+    
+    // Consider a bus "far away" if the boarding point is far from the requested from depot
+    // and user would need to travel a significant distance to reach it
+    const isFarAway = boardingPoint !== fromDepot && distance > 50; // More than 50km is considered far away
     
     return {
       ...bus,
-      distance
+      distance,
+      boardingPoint,
+      boardingLocation,
+      isFarAway
     };
   });
   
@@ -39,9 +57,7 @@ export function findBuses(fromDepot: string, toDepot: string, userLocation?: Lat
 
 export function searchBusesByDepot(depot: string): BusData[] {
   return busData.filter(bus => 
-    bus.from === depot || 
-    bus.to === depot || 
-    bus.route_highlights.includes(depot)
+    bus.route_sequence.includes(depot)
   );
 }
 
