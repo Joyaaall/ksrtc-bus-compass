@@ -1,4 +1,3 @@
-
 export interface BusData {
   id: number;
   name: string;
@@ -110,5 +109,145 @@ export const busData: BusData[] = [
     bus_type: "Super Express",
     route_highlights: "Kottayam, Ernakulam, Thrissur",
     depot_location: [9.2648, 76.7870]
+  },
+  {
+    id: 7,
+    name: "KSRTC KNR-001",
+    from: "Kannur",
+    to: "Kasaragod",
+    departure: "6:00 AM",
+    bus_type: "Town to Town Ordinary",
+    route_highlights: "Pappinisseri, Thaliparamba, Pariyaaram Medical College, Payyannur, Karivellur, Kanhangad",
+    depot_location: [11.8745, 75.3704]
+  },
+  {
+    id: 8,
+    name: "KSRTC KNR-002",
+    from: "Kannur",
+    to: "Kasaragod",
+    departure: "6:15 AM",
+    bus_type: "Town to Town Ordinary",
+    route_highlights: "Pappinisseri, Thaliparamba, Pariyaaram Medical College, Payyannur, Karivellur, Kanhangad",
+    depot_location: [11.8745, 75.3704]
+  },
+  {
+    id: 9,
+    name: "KSRTC KNR-003",
+    from: "Kannur",
+    to: "Kasaragod",
+    departure: "12:30 PM",
+    bus_type: "Town to Town Ordinary",
+    route_highlights: "Pappinisseri, Thaliparamba, Pariyaaram Medical College, Payyannur, Karivellur, Kanhangad",
+    depot_location: [11.8745, 75.3704]
+  },
+  {
+    id: 10,
+    name: "KSRTC KNR-004",
+    from: "Kannur",
+    to: "Kasaragod",
+    departure: "1:40 PM",
+    bus_type: "Town to Town Ordinary",
+    route_highlights: "Pappinisseri, Thaliparamba, Pariyaaram Medical College, Payyannur, Karivellur, Kanhangad",
+    depot_location: [11.8745, 75.3704]
+  },
+  {
+    id: 11,
+    name: "KSRTC KNR-005",
+    from: "Kannur",
+    to: "Kasaragod",
+    departure: "6:00 PM",
+    bus_type: "Town to Town Ordinary",
+    route_highlights: "Standard route",
+    depot_location: [11.8745, 75.3704]
+  },
+  {
+    id: 12,
+    name: "KSRTC KNR-006",
+    from: "Kannur",
+    to: "Kasaragod",
+    departure: "6:05 PM",
+    bus_type: "Fast Passenger",
+    route_highlights: "Pariyaaram Medical College, Payyannur, Karivellur, Cheruvathoor, Neeleswaram, Kanhangad, Cherkala",
+    depot_location: [11.8745, 75.3704]
+  },
+  {
+    id: 13,
+    name: "KSRTC KNR-007",
+    from: "Kannur",
+    to: "Kasaragod",
+    departure: "6:40 PM",
+    bus_type: "Town to Town Ordinary",
+    route_highlights: "Standard route",
+    depot_location: [11.8745, 75.3704]
+  },
+  {
+    id: 14,
+    name: "KSRTC KNR-008",
+    from: "Kannur",
+    to: "Kasaragod",
+    departure: "7:15 PM",
+    bus_type: "Fast Passenger",
+    route_highlights: "Thaliparamba, Payyannur, Kanhangad",
+    depot_location: [11.8745, 75.3704]
+  },
+  {
+    id: 15,
+    name: "KSRTC KNR-009",
+    from: "Kannur",
+    to: "Kasaragod",
+    departure: "8:10 PM",
+    bus_type: "Limited Stop Fast Passenger",
+    route_highlights: "Thaliparamba, Pariyaaram Medical College, Payyannur, Cheruvathoor, Neeleswaram, Kanhangad, Cherkala",
+    depot_location: [11.8745, 75.3704]
+  },
+  {
+    id: 16,
+    name: "KSRTC KNR-010",
+    from: "Kannur",
+    to: "Kasaragod",
+    departure: "10:30 PM",
+    bus_type: "Super Deluxe (KSRTC-SWIFT)",
+    route_highlights: "Via Payyannur",
+    depot_location: [11.8745, 75.3704]
+  },
+  {
+    id: 17,
+    name: "KSRTC KNR-011",
+    from: "Kannur",
+    to: "Kasaragod",
+    departure: "11:30 PM",
+    bus_type: "Town to Town Ordinary",
+    route_highlights: "Pazhayangadi, Payyannur, Kanhangad",
+    depot_location: [11.8745, 75.3704]
+  },
+  {
+    id: 18,
+    name: "KSRTC TVM-001",
+    from: "Trivandrum",
+    to: "Alappuzha",
+    departure: "12:00 AM",
+    bus_type: "Low Floor AC",
+    route_highlights: "Trivandrum → Kazhakkoottam → Kaniyapuram → Attingal → Kollam → Karunagappalli → Kayamkulam → Haripad → Ambalapuzha → Alappuzha",
+    depot_location: [8.4855, 76.9492]
+  },
+  {
+    id: 19,
+    name: "KSRTC TVM-002",
+    from: "Trivandrum",
+    to: "Alappuzha",
+    departure: "12:01 AM",
+    bus_type: "Super Fast",
+    route_highlights: "Trivandrum → Kazhakkoottam → Kaniyapuram → Attingal → Chathannoor → Kollam → Karunagappalli → Kayamkulam → Haripad → Ambalapuzha → Alappuzha",
+    depot_location: [8.4855, 76.9492]
+  },
+  {
+    id: 25,
+    name: "KSRTC TVM-008",
+    from: "Trivandrum",
+    to: "Kottayam",
+    departure: "1:00 AM",
+    bus_type: "Super Fast",
+    route_highlights: "Thiruvananthapuram → Venjaramoodu → Kilimanoor → Chadayamangalam → Ayoor → Valakom → Kottarakkara → Yenath → Adoor → Pandalam → Chengannur → Thiruvalla → Changanassery → Kottayam",
+    depot_location: [8.4855, 76.9492]
   }
 ];
