@@ -115,7 +115,15 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
-      <Header />
+      <Header onSelectDepot={(name, location) => {
+        setSelectedDepot({ name, location });
+        setVisibleDepotNames([name]);
+        toast({
+          title: "Depot selected",
+          description: `Showing location of ${name} depot on the map.`,
+          duration: 3000
+        });
+      }} />
       
       <main className="flex-1 container mx-auto px-2 py-2 md:px-4 md:py-4">
         {isMobile ? (
