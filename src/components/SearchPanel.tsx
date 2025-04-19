@@ -59,14 +59,14 @@ const SearchPanel = ({ onSearch, userLocation, onFindNearestDepot }: SearchPanel
   }, [to]);
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-4">
-      <div className="space-y-4">
+    <div className="bg-white rounded-lg shadow-md p-3 md:p-4">
+      <div className="space-y-3 md:space-y-4">
         <div className="relative">
           <Label htmlFor="from-depot" className="text-sm font-medium flex items-center mb-1.5">
             <MapPinIcon className="w-4 h-4 mr-1 text-ksrtc-red" />
             From Depot
           </Label>
-          <div className="flex">
+          <div className="flex space-x-2">
             <Input
               id="from-depot"
               placeholder="Enter departure depot"
@@ -74,14 +74,14 @@ const SearchPanel = ({ onSearch, userLocation, onFindNearestDepot }: SearchPanel
               onChange={(e) => setFrom(e.target.value)}
               onFocus={() => setShowFromSuggestions(true)}
               onBlur={() => setTimeout(() => setShowFromSuggestions(false), 200)}
-              className="flex-1"
+              className="flex-1 text-sm"
             />
             {userLocation && (
               <Button 
                 type="button" 
                 variant="outline" 
                 size="icon" 
-                className="ml-2" 
+                className="flex-none" 
                 onClick={findNearest}
                 title="Find nearest depot"
               >
@@ -94,7 +94,7 @@ const SearchPanel = ({ onSearch, userLocation, onFindNearestDepot }: SearchPanel
               {fromSuggestions.map((depot) => (
                 <div
                   key={depot}
-                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                  className="px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer"
                   onClick={() => {
                     setFrom(depot);
                     setShowFromSuggestions(false);
@@ -119,13 +119,14 @@ const SearchPanel = ({ onSearch, userLocation, onFindNearestDepot }: SearchPanel
             onChange={(e) => setTo(e.target.value)}
             onFocus={() => setShowToSuggestions(true)}
             onBlur={() => setTimeout(() => setShowToSuggestions(false), 200)}
+            className="text-sm"
           />
           {showToSuggestions && toSuggestions.length > 0 && (
             <div className="absolute z-10 mt-1 w-full bg-white border rounded-md shadow-lg max-h-48 overflow-y-auto">
               {toSuggestions.map((depot) => (
                 <div
                   key={depot}
-                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                  className="px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer"
                   onClick={() => {
                     setTo(depot);
                     setShowToSuggestions(false);

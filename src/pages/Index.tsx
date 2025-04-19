@@ -10,6 +10,8 @@ import { depots } from "@/data/depots";
 import { LatLngTuple } from "leaflet";
 import { MapPin } from "lucide-react";
 import { calculateDistance, formatDistance } from "@/services/mapService";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 
 const Index = () => {
   const [userLocation, setUserLocation] = useState<LatLngTuple | null>(null);
@@ -24,8 +26,8 @@ const Index = () => {
   const {
     toast
   } = useToast();
+  const isMobile = useIsMobile();
 
-  // Get user location on component mount
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(position => {
@@ -43,7 +45,6 @@ const Index = () => {
           variant: "destructive",
           duration: 5000
         });
-        // Set default location to center of Kerala
         setUserLocation([10.1632, 76.6413]);
       });
     }
@@ -53,7 +54,6 @@ const Index = () => {
     setIsLoading(true);
     setVisibleDepotNames([from, to]);
 
-    // Simulate loading for better UX
     setTimeout(() => {
       const results = findBuses(from, to, userLocation || undefined);
       setBuses(results);
@@ -113,41 +113,80 @@ const Index = () => {
     });
   };
 
-  return <div className="min-h-screen flex flex-col bg-gray-100">
+  return (
+    <div className="min-h-screen flex flex-col bg-gray-100">
       <Header />
       
-      <main className="flex-1 container mx-auto px-4 py-4">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          {/* Left sidebar */}
-          <div className="lg:col-span-1 space-y-4">
-            <SearchPanel onSearch={handleSearch} userLocation={userLocation} onFindNearestDepot={handleFindNearestDepot} />
+      <main className="flex-1 container mx-auto px-2 py-2 md:px-4 md:py-4">
+        {isMobile ? (
+          <div className="flex flex-col h-[calc(100vh-64px)]">
+            <div className="flex-none">
+              <SearchPanel onSearch={handleSearch} userLocation={userLocation} onFindNearestDepot={handleFindNearestDepot} />
+            </div>
             
-            <ResultsPanel buses={buses} onGetDirections={handleGetDirections} isLoading={isLoading} searched={searched} />
-          </div>
-          
-          {/* Map container */}
-          <div className="lg:col-span-2 bg-white rounded-lg shadow-md overflow-hidden h-[calc(100vh-120px)]">
-            {!userLocation ? <div className="h-full flex items-center justify-center">
-                <div className="text-center p-6">
-                  <div className="bg-gray-100 rounded-full p-4 mx-auto mb-4 w-16 h-16 flex items-center justify-center">
-                    <MapPin className="h-8 w-8 text-ksrtc-red" />
+            <div className="flex-1 mt-2">
+              {!userLocation ? (
+                <div className="h-full flex items-center justify-center bg-white rounded-lg shadow-md">
+                  <div className="text-center p-4">
+                    <div className="bg-gray-100 rounded-full p-4 mx-auto mb-4 w-14 h-14 flex items-center justify-center">
+                      <MapPin className="h-6 w-6 text-ksrtc-red" />
+                    </div>
+                    <h3 className="text-base font-medium mb-2">Enable location access</h3>
+                    <p className="text-gray-500 text-sm max-w-[250px] mx-auto">
+                      Please allow location access to find the nearest bus depots.
+                    </p>
                   </div>
-                  <h3 className="text-lg font-medium mb-2">Enable location access</h3>
-                  <p className="text-gray-500 max-w-sm">
-                    Please allow location access to find the nearest bus depots and plan your journey better.
-                  </p>
                 </div>
-              </div> : <MapComponent userLocation={userLocation} selectedDepot={selectedDepot} depots={depots} visibleDepotNames={visibleDepotNames} />}
+              ) : (
+                <MapComponent userLocation={userLocation} selectedDepot={selectedDepot} depots={depots} visibleDepotNames={visibleDepotNames} />
+              )}
+            </div>
+
+            {searched && (
+              <Drawer>
+                <DrawerTrigger className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-ksrtc-red text-white px-4 py-2 rounded-full shadow-lg flex items-center space-x-2">
+                  <span>View {buses.length} Results</span>
+                </DrawerTrigger>
+                <DrawerContent className="max-h-[80vh] overflow-y-auto">
+                  <ResultsPanel buses={buses} onGetDirections={handleGetDirections} isLoading={isLoading} searched={searched} />
+                </DrawerContent>
+              </Drawer>
+            )}
           </div>
-        </div>
+        ) : (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <div className="lg:col-span-1 space-y-4">
+              <SearchPanel onSearch={handleSearch} userLocation={userLocation} onFindNearestDepot={handleFindNearestDepot} />
+              <ResultsPanel buses={buses} onGetDirections={handleGetDirections} isLoading={isLoading} searched={searched} />
+            </div>
+            <div className="lg:col-span-2 bg-white rounded-lg shadow-md overflow-hidden h-[calc(100vh-120px)]">
+              {!userLocation ? (
+                <div className="h-full flex items-center justify-center">
+                  <div className="text-center p-6">
+                    <div className="bg-gray-100 rounded-full p-4 mx-auto mb-4 w-16 h-16 flex items-center justify-center">
+                      <MapPin className="h-8 w-8 text-ksrtc-red" />
+                    </div>
+                    <h3 className="text-lg font-medium mb-2">Enable location access</h3>
+                    <p className="text-gray-500 max-w-sm">
+                      Please allow location access to find the nearest bus depots and plan your journey better.
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <MapComponent userLocation={userLocation} selectedDepot={selectedDepot} depots={depots} visibleDepotNames={visibleDepotNames} />
+              )}
+            </div>
+          </div>
+        )}
       </main>
       
-      <footer className="bg-gray-800 text-gray-300 py-3 text-center text-sm">
-        <div className="container mx-auto">
+      <footer className="bg-gray-800 text-gray-300 py-2 text-xs md:text-sm text-center">
+        <div className="container mx-auto px-2">
           <p>On Route Travel Solutions © 2025 | Data From Kbuses</p>
         </div>
       </footer>
-    </div>;
+    </div>
+  );
 };
 
 export default Index;
