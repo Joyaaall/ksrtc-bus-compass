@@ -10,6 +10,7 @@ import { depots } from "@/data/depots";
 import { LatLngTuple } from "leaflet";
 import { MapPin } from "lucide-react";
 import { calculateDistance, formatDistance } from "@/services/mapService";
+
 const Index = () => {
   const [userLocation, setUserLocation] = useState<LatLngTuple | null>(null);
   const [buses, setBuses] = useState<BusWithDistance[]>([]);
@@ -47,6 +48,7 @@ const Index = () => {
       });
     }
   }, [toast]);
+
   const handleSearch = (from: string, to: string) => {
     setIsLoading(true);
     setVisibleDepotNames([from, to]);
@@ -63,7 +65,7 @@ const Index = () => {
           toast({
             title: `Found ${results.length} buses`,
             description: `${withWarnings} buses require traveling to a distant depot first.`,
-            variant: "warning",
+            variant: "default",
             duration: 5000
           });
         } else {
@@ -83,6 +85,7 @@ const Index = () => {
       }
     }, 1000);
   };
+
   const handleGetDirections = (busId: number) => {
     const bus = buses.find(b => b.id === busId);
     if (bus && userLocation) {
@@ -97,6 +100,7 @@ const Index = () => {
       });
     }
   };
+
   const handleFindNearestDepot = (depot: {
     name: string;
     location: LatLngTuple;
@@ -108,6 +112,7 @@ const Index = () => {
       duration: 3000
     });
   };
+
   return <div className="min-h-screen flex flex-col bg-gray-100">
       <Header />
       
@@ -144,4 +149,5 @@ const Index = () => {
       </footer>
     </div>;
 };
+
 export default Index;
