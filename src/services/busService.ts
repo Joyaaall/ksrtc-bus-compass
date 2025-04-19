@@ -12,6 +12,9 @@ export interface BusWithDistance extends BusData {
 }
 
 export function findBuses(fromDepot: string, toDepot: string, userLocation?: LatLngTuple): BusWithDistance[] {
+  console.log(`Searching for buses from ${fromDepot} to ${toDepot}`);
+  console.log(`Total buses available for search: ${busData.length}`);
+  
   // Filter buses that match the route in correct order
   const matchingBuses = busData.filter(bus => {
     const route = bus.route_sequence;
@@ -21,6 +24,8 @@ export function findBuses(fromDepot: string, toDepot: string, userLocation?: Lat
     // Valid if both depots exist and are in correct order
     return fromIndex !== -1 && toIndex !== -1 && fromIndex < toIndex;
   });
+  
+  console.log(`Found ${matchingBuses.length} matching buses`);
   
   // Add distance and boarding point info
   const busesWithDistance = matchingBuses.map(bus => {
@@ -56,9 +61,15 @@ export function findBuses(fromDepot: string, toDepot: string, userLocation?: Lat
 }
 
 export function searchBusesByDepot(depot: string): BusData[] {
-  return busData.filter(bus => 
+  console.log(`Searching for buses connecting to depot: ${depot}`);
+  console.log(`Total buses available for search: ${busData.length}`);
+  
+  const result = busData.filter(bus => 
     bus.route_sequence.includes(depot)
   );
+  
+  console.log(`Found ${result.length} buses connecting to ${depot}`);
+  return result;
 }
 
 export function findNearestDepot(userLocation: LatLngTuple, depots: Record<string, LatLngTuple>): { name: string, location: LatLngTuple, distance: number } {
