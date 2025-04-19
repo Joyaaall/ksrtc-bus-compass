@@ -1,4 +1,3 @@
-
 export type DepotMap = {
   [key: string]: [number, number]; // [lat, lng]
 };
@@ -71,5 +70,30 @@ export const depots: DepotMap = {
   "Puthukkad": [10.4333, 76.3667],
   "Valakom": [8.9500, 76.7500],
   "Ayoor": [8.9333, 76.7833],
-  "Chadayamangalam": [8.8833, 76.8167]
+  "Chadayamangalam": [8.8833, 76.8167],
+  "Idukki": [9.9189, 76.9731],
+  "Kothamangalam": [10.0595, 76.6279],
+  "Muvattupuzha": [9.9894, 76.5790],
+  "Koothattukulam": [9.8644, 76.5938],
+  "Pampady": [9.5833, 76.6500],
+  "Ponkunnam": [9.6700, 76.7200],
+  "Kanjirappally": [9.5700, 76.7900],
+  "Mundakkayam": [9.5400, 76.8800],
+  "Kattappana": [9.7500, 77.1167],
+  "Kunnamkulam": [10.6500, 76.0667],
+  "Edappal": [10.7800, 75.9500],
+  "Kuttipuram": [10.8300, 76.0200],
+  "Kottakkal": [11.0000, 76.0000],
+  "Kozhikode University": [11.1300, 75.8900],
+  "Vadakkencherry": [10.6000, 76.5000],
+  "Alathur": [10.4500, 76.5500],
+  "Kuzhalmannam": [10.5000, 76.6000],
+  "Kakkanad": [10.0157, 76.3419],
+  "Pookkattupady": [10.0500, 76.3700],
+  "Vazhakulam": [10.0800, 76.5900],
+  "Neriamangalam": [10.0500, 76.7500],
+  "Chelachuvadu": [10.0000, 76.8500],
+  "Karimban": [9.9500, 76.9000],
+  "Thadiyampad": [9.9000, 76.9500],
+  "Cheruthoni": [9.8500, 77.0000]
 };

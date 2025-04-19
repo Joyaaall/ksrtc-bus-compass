@@ -1,4 +1,3 @@
-
 import { BusData } from "../buses";
 
 export const otherRoutes: BusData[] = [
@@ -229,8 +228,19 @@ export const otherRoutes: BusData[] = [
     to: "Thrissur",
     departure: "6:00 AM",
     bus_type: "KSRTC-SWIFT Super Fast",
-    route_highlights: "Kottayam → Ernakulam → Thrissur",
-    route_sequence: ["Kottayam", "Ernakulam", "Thrissur"],
+    route_highlights: "Kottayam → Ettumanoor → Koothattukulam → Muvattupuzha → Perumbavoor → Angamaly → Chalakudy → Puthukad → Thrissur",
+    route_sequence: ["Kottayam", "Ettumanoor", "Koothattukulam", "Muvattupuzha", "Perumbavoor", "Angamaly", "Chalakudy", "Puthukad", "Thrissur"],
+    depot_location: [9.5916, 76.5222]
+  },
+  {
+    id: 46,
+    name: "KSRTC KTM-004",
+    from: "Kottayam",
+    to: "Idukki",
+    departure: "2:00 AM",
+    bus_type: "KSRTC-SWIFT Trivandrum",
+    route_highlights: "Kottayam → Pampady → Ponkunnam → Kanjirappally → Mundakkayam → Kuttikkanam → Elappara → Kattappana → Idukki",
+    route_sequence: ["Kottayam", "Pampady", "Ponkunnam", "Kanjirappally", "Mundakkayam", "Kuttikkanam", "Elappara", "Kattappana", "Idukki"],
     depot_location: [9.5916, 76.5222]
   }
 ];
